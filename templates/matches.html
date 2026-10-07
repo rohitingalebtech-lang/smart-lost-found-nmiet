@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Matches | NMIET Lost & Found</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .navbar {
+            background: #063b73;
+            color: white;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffd43b;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #ffd43b;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: 35px auto;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .page-header h1 {
+            color: #063b73;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #667085;
+            line-height: 1.6;
+        }
+
+        .dsa-badge {
+            display: inline-block;
+            margin-top: 15px;
+            background: #fff4c2;
+            color: #765d00;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .source-item {
+            background: #063b73;
+            color: white;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .source-item h2 {
+            margin-bottom: 8px;
+        }
+
+        .source-item p {
+            margin-top: 6px;
+            color: #e4edf8;
+        }
+
+        .match-count {
+            margin-top: 12px;
+            font-weight: bold;
+            color: #ffd43b;
+        }
+
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 22px;
+        }
+
+        .match-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+
+        .match-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            background: #e9eef5;
+        }
+
+        .no-image {
+            height: 190px;
+            background: #e9eef5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667085;
+            font-size: 14px;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: #063b73;
+            margin-bottom: 10px;
+        }
+
+        .detail {
+            margin: 7px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .score-box {
+            margin: 15px 0;
+            padding: 13px;
+            background: #eef7ee;
+            border-left: 5px solid #2e8b57;
+            border-radius: 7px;
+        }
+
+        .score {
+            font-size: 22px;
+            font-weight: bold;
+            color: #237a46;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .view-btn {
+            display: block;
+            text-align: center;
+            background: #063b73;
+            color: white;
+            text-decoration: none;
+            padding: 11px;
+            border-radius: 7px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            background: #0b559c;
+        }
+
+        .empty {
+            background: white;
+            padding: 45px 25px;
+            text-align: center;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .empty h2 {
+            color: #063b73;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #667085;
+            margin-bottom: 20px;
+        }
+
+        .search-btn {
+            display: inline-block;
+            background: #063b73;
+            color: white;
+            padding: 12px 22px;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 55px;
+            padding: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .page-header,
+            .source-item {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        NMIET <span>Lost & Found</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/report/lost">Report Lost</a>
+        <a href="/report/found">Report Found</a>
+        <a href="/search">Search</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>🔎 Smart Matching Results</h1>
+
+        <p>
+            The system uses Data Structures and Algorithms to find
+            potentially matching lost and found items.
+        </p>
+
+        <div class="dsa-badge">
+            DSA: Hashing + Greedy Matching + Dynamic Programming + Heap Ranking
+        </div>
+    </div>
+
+    {% if item %}
+
+    <div class="source-item">
+        <h2>Searching Matches For: {{ item.item_name }}</h2>
+
+        <p>
+            Category: {{ item.category }}
+        </p>
+
+        <p>
+            Location: {{ item.location }}
+        </p>
+
+        <div class="match-count">
+            {{ matches|length }} potential match(es) found
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% if matches %}
+
+    <div class="matches-grid">
+
+        {% for match in matches %}
+
+        <div class="match-card">
+
+            {% if match.image %}
+                <img
+                    src="{{ url_for('static', filename='uploads/' + match.image) }}"
+                    class="item-image"
+                    alt="Matched item"
+                >
+            {% else %}
+                <div class="no-image">
+                    No image available
+                </div>
+            {% endif %}
+
+            <div class="card-content">
+
+                <h3>{{ match.item_name }}</h3>
+
+                <div class="detail">
+                    <strong>Type:</strong>
+                    {{ match.item_type }}
+                </div>
+
+                <div class="detail">
+                    <strong>Category:</strong>
+                    {{ match.category }}
+                </div>
+
+                <div class="detail">
+                    <strong>Location:</strong>
+                    {{ match.location }}
+                </div>
+
+                {% if match.description %}
+                <div class="detail">
+                    <strong>Description:</strong>
+                    {{ match.description }}
+                </div>
+                {% endif %}
+
+                <div class="score-box">
+
+                    <div class="score">
+                        {{ "%.1f"|format(match.score|float) }}%
+                    </div>
+
+                    <div class="score-label">
+                        DSA Match Score
+                    </div>
+
+                </div>
+
+                <a
+                    href="/item/{{ match.item_id }}"
+                    class="view-btn"
+                >
+                    View Item Details
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+
+        <h2>🔍 No Matching Items Found</h2>
+
+        <p>
+            No sufficiently similar item was found in the current
+            Lost & Found database.
+        </p>
+
+        <a href="/search" class="search-btn">
+            Search All Items
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+    Presented by Rohit Ingale & Ajinkya Ambare
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim Item | NMIET Lost & Found</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+.header{
+    background:#073b7a;
+    color:white;
+    padding:22px;
+    text-align:center;
+}
+
+.header h1{
+    font-size:28px;
+}
+
+.header p{
+    margin-top:6px;
+    opacity:.9;
+}
+
+.container{
+    max-width:720px;
+    margin:35px auto;
+    padding:0 20px;
+}
+
+.card{
+    background:white;
+    padding:28px;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.item-box{
+    background:#eef5ff;
+    border-left:5px solid #0b63ce;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:22px;
+}
+
+.item-box h2{
+    color:#073b7a;
+    margin-bottom:8px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:15px 0 7px;
+}
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd5e0;
+    border-radius:8px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.private-note{
+    margin-top:8px;
+    font-size:13px;
+    color:#667085;
+}
+
+button{
+    width:100%;
+    margin-top:22px;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:#073b7a;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0b63ce;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    color:#073b7a;
+    text-decoration:none;
+}
+
+.footer{
+    text-align:center;
+    margin-top:30px;
+    padding:20px;
+    color:#667085;
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>NMIET Lost & Found</h1>
+    <p>Submit Claim</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<div class="item-box">
+    <h2>{{ item.item_name }}</h2>
+    <p><strong>Category:</strong> {{ item.category }}</p>
+    <p><strong>Location:</strong> {{ item.location }}</p>
+</div>
+
+<form method="POST">
+
+<label>Claimant Name</label>
+<input
+    type="text"
+    name="claimant_name"
+    value="{{ session.get('user_name', '') }}"
+    required
+>
+
+<label>Roll Number</label>
+<input
+    type="text"
+    name="claimant_roll_no"
+    value="{{ session.get('roll_no', '') }}"
+    required
+>
+
+<label>Department</label>
+<input
+    type="text"
+    name="claimant_department"
+    value="{{ session.get('department', '') }}"
+    required
+>
+
+<label>Mobile Number</label>
+<input
+    type="tel"
+    name="claimant_phone"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    placeholder="Enter 10-digit mobile number"
+    required
+>
+
+<div class="private-note">
+    🔒 Your mobile number is confidential and is not displayed publicly.
+</div>
+
+<label>Why are you claiming this item?</label>
+<textarea
+    name="reason"
+    placeholder="Provide identifying details to verify ownership..."
+    required
+></textarea>
+
+<button type="submit">
+    Submit Claim
+</button>
+
+</form>
+
+<a class="back" href="{{ url_for('view_item', item_id=item.id) }}">
+    ← Back to Item
+</a>
+
+</div>
+
+<div class="footer">
+    Presented by Rohit Ingale & Ajinkya Ambare
+</div>
+
+</div>
+
+</body>
+</html>

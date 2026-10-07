@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Reports | NMIET Lost & Found</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .navbar {
+            background: #073b78;
+            color: white;
+            padding: 15px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #e74c3c;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            color: #073b78;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        .reports {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .report-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            background: #e9eef5;
+        }
+
+        .no-image {
+            height: 210px;
+            background: #e9eef5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+
+        .report-content {
+            padding: 22px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .lost {
+            background: #ffe1df;
+            color: #b42318;
+        }
+
+        .found {
+            background: #dff7e8;
+            color: #087443;
+        }
+
+        .report-content h2 {
+            color: #073b78;
+            margin-bottom: 12px;
+        }
+
+        .detail {
+            margin: 7px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .detail strong {
+            color: #222;
+        }
+
+        .view-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 16px;
+            background: #073b78;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            background: #052c5c;
+        }
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 55px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .empty h2 {
+            color: #073b78;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .report-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #ffd21f;
+            color: #073b78;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 70px;
+            background: #061f3d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer p {
+            font-size: 13px;
+            opacity: 0.75;
+        }
+
+        footer .credit {
+            margin-top: 8px;
+            color: #ffd21f;
+            font-size: 11px;
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .reports {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎓 NMIET Lost & Found
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/profile">
+            Profile
+        </a>
+
+        <a href="/search">
+            Search
+        </a>
+
+        <a href="/report-lost">
+            Report Lost
+        </a>
+
+        <a href="/report-found">
+            Report Found
+        </a>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>
+            My Reports
+        </h1>
+
+        <p>
+            Lost and found items reported by you
+        </p>
+
+    </div>
+
+
+    {% if items %}
+
+        <div class="reports">
+
+            {% for item in items %}
+
+                <div class="report-card">
+
+                    {% if item["image_filename"] %}
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + item['image_filename']) }}"
+                            class="report-image"
+                            alt="Item Image"
+                        >
+
+                    {% else %}
+
+                        <div class="no-image">
+                            📷 No Image
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="report-content">
+
+                        {% if item["item_type"] == "Lost" %}
+
+                            <span class="badge lost">
+                                LOST
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge found">
+                                FOUND
+                            </span>
+
+                        {% endif %}
+
+
+                        <h2>
+                            {{ item["item_name"] }}
+                        </h2>
+
+
+                        <div class="detail">
+                            <strong>Category:</strong>
+                            {{ item["category"] }}
+                        </div>
+
+
+                        <div class="detail">
+                            <strong>Location:</strong>
+                            {{ item["location"] or "Not specified" }}
+                        </div>
+
+
+                        <div class="detail">
+                            <strong>Date:</strong>
+                            {{ item["item_date"] or "Not specified" }}
+                        </div>
+
+
+                        <div class="detail">
+                            <strong>Status:</strong>
+                            {{ item["status"] }}
+                        </div>
+
+
+                        <a
+                            href="{{ url_for('view_item', item_id=item['id']) }}"
+                            class="view-btn"
+                        >
+                            View Details →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>
+                No Reports Yet
+            </h2>
+
+            <p>
+                You haven't reported any lost or found items yet.
+            </p>
+
+            <a
+                href="/report-lost"
+                class="report-btn"
+            >
+                Report Your First Item
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<footer>
+
+    <p>
+        NMIET Smart Lost & Found Management System
+    </p>
+
+    <p class="credit">
+        Presented by Rohit Ingale & Ajinkya Ambare
+    </p>
+
+</footer>
+
+</body>
+</html>

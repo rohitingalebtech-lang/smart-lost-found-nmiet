@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report {{ item_type }} Item | NMIET</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #17233c;
+        }
+
+        header {
+            background: #0b3d91;
+            color: white;
+            padding: 16px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+        }
+
+        .brand p {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #dce9ff;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffd43b;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h2 {
+            color: #0b3d91;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #68758b;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 32px;
+            border-radius: 14px;
+            box-shadow: 0 6px 25px rgba(20, 50, 90, 0.09);
+            border: 1px solid #e1e7f0;
+        }
+
+        .section-title {
+            color: #0b3d91;
+            font-size: 18px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e4e9f1;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #273650;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd5e3;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0b3d91;
+            box-shadow: 0 0 0 2px rgba(11, 61, 145, 0.08);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .hint {
+            margin-top: 5px;
+            font-size: 11px;
+            color: #7a879b;
+        }
+
+        .upload-box {
+            border: 2px dashed #b9c7da;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            background: #f8faff;
+        }
+
+        .upload-box strong {
+            display: block;
+            color: #0b3d91;
+            margin-bottom: 6px;
+        }
+
+        .upload-box p {
+            font-size: 12px;
+            color: #738097;
+            margin-bottom: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #0b3d91;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #082f70;
+        }
+
+        .btn-secondary {
+            background: #e9eef6;
+            color: #273650;
+        }
+
+        footer {
+            background: #071f49;
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: #b9c9e5;
+        }
+
+        footer .credits {
+            margin-top: 12px;
+            font-size: 11px;
+            color: #8fa6c9;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px 5%;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">
+        <h1>NMIET Smart Lost & Found</h1>
+        <p>Campus Management System</p>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/report-lost">Lost</a>
+        <a href="/report-found">Found</a>
+        <a href="/search">Search</a>
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+    <div class="heading">
+
+        <h2>
+            Report {{ item_type }} Item
+        </h2>
+
+        <p>
+            Provide accurate information to help students and staff
+            identify and recover the item.
+        </p>
+
+    </div>
+
+
+    <form
+        class="form-card"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <!-- BASIC INFORMATION -->
+
+        <h3 class="section-title">
+            1. Item Information
+        </h3>
+
+        <div class="form-grid">
+
+            <div>
+                <label>Item Name *</label>
+
+                <input
+                    type="text"
+                    name="item_name"
+                    placeholder="Example: Black Wallet"
+                    required
+                >
+            </div>
+
+
+            <div>
+                <label>Category *</label>
+
+                <select name="category" required>
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option>Mobile Phone</option>
+                    <option>Laptop</option>
+                    <option>Wallet</option>
+                    <option>Keys</option>
+                    <option>Identity Card</option>
+                    <option>Books / Notes</option>
+                    <option>Bag</option>
+                    <option>Electronics</option>
+                    <option>Clothing</option>
+                    <option>Accessories</option>
+                    <option>Documents</option>
+                    <option>Other</option>
+
+                </select>
+            </div>
+
+
+            <div>
+                <label>Color</label>
+
+                <input
+                    type="text"
+                    name="color"
+                    placeholder="Example: Black"
+                >
+            </div>
+
+
+            <div>
+                <label>Brand</label>
+
+                <input
+                    type="text"
+                    name="brand"
+                    placeholder="Example: Samsung / HP / Nike"
+                >
+            </div>
+
+
+            <div class="full">
+
+                <label>Description</label>
+
+                <textarea
+                    name="description"
+                    placeholder="Describe the item in detail..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="full">
+
+                <label>Unique Identification Mark</label>
+
+                <input
+                    type="text"
+                    name="unique_mark"
+                    placeholder="Example: Scratch on back, sticker, cover, initials..."
+                >
+
+                <div class="hint">
+                    Add any detail that can help verify ownership.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DATE AND LOCATION -->
+
+        <h3 class="section-title">
+            2. Date & Campus Location
+        </h3>
+
+        <div class="form-grid">
+
+            <div>
+
+                <label>Date *</label>
+
+                <input
+                    type="date"
+                    name="item_date"
+                    required
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Approximate Time</label>
+
+                <input
+                    type="time"
+                    name="item_time"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Campus Location *</label>
+
+                <select name="location" required>
+
+                    <option value="">
+                        Select location
+                    </option>
+
+                    <option>Library</option>
+                    <option>Canteen</option>
+                    <option>Classroom</option>
+                    <option>Laboratory</option>
+                    <option>Parking</option>
+                    <option>Playground</option>
+                    <option>Hostel</option>
+                    <option>Administrative Office</option>
+                    <option>Auditorium</option>
+                    <option>Workshop</option>
+                    <option>Corridor</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>Specific Area</label>
+
+                <input
+                    type="text"
+                    name="specific_area"
+                    placeholder="Example: 2nd floor, Room 204"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <h3 class="section-title">
+            3. Item Image
+        </h3>
+
+        <div class="upload-box">
+
+            <strong>
+                Upload Item Photograph
+            </strong>
+
+            <p>
+                JPG, JPEG, PNG or WEBP • Maximum recommended size: 5 MB
+            </p>
+
+            <input
+                type="file"
+                name="image"
+                accept=".jpg,.jpeg,.png,.webp"
+            >
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <a href="/" class="btn btn-secondary">
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Submit {{ item_type }} Report
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<footer>
+
+    <p>
+        NMIET Smart Lost & Found Management System
+    </p>
+
+    <div class="credits">
+        Presented by Rohit Ingale & Ajinkya Ambare
+    </div>
+
+</footer>
+
+</body>
+</html>

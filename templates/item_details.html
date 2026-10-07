@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ item["item_name"] }} | NMIET Lost & Found</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #17233c;
+        }
+
+        header {
+            background: #0b3d91;
+            color: white;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+        }
+
+        .brand p {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #dce9ff;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffd43b;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        /* SUCCESS MESSAGE */
+        .flash-message {
+            background: #eaf8ef;
+            border: 1px solid #9bd5ad;
+            color: #176b35;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0b3d91;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e1e7f0;
+            box-shadow: 0 7px 25px rgba(20, 50, 90, 0.09);
+            display: grid;
+            grid-template-columns: 45% 55%;
+        }
+
+        .image-section {
+            min-height: 450px;
+            background: #edf2f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+            object-fit: cover;
+        }
+
+        .no-image {
+            color: #8290a6;
+            font-size: 14px;
+        }
+
+        .details {
+            padding: 35px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .lost {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        .found {
+            background: #ecf8f0;
+            color: #1d7a42;
+        }
+
+        .details h2 {
+            color: #17233c;
+            font-size: 30px;
+            margin-bottom: 22px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .info {
+            border-bottom: 1px solid #e5eaf1;
+            padding-bottom: 10px;
+        }
+
+        .info.full {
+            grid-column: 1 / -1;
+        }
+
+        .label {
+            display: block;
+            font-size: 11px;
+            color: #7a879b;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .value {
+            font-size: 14px;
+            color: #273650;
+            line-height: 1.5;
+        }
+
+        .description {
+            margin-top: 22px;
+            padding: 17px;
+            background: #f6f8fc;
+            border-radius: 8px;
+        }
+
+        .description p {
+            margin-top: 8px;
+            color: #59677d;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 13px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #0b3d91;
+            color: white;
+        }
+
+        .secondary {
+            background: #e9eef6;
+            color: #273650;
+        }
+
+        .primary:hover {
+            background: #082f70;
+        }
+
+        footer {
+            background: #071f49;
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: #b9c9e5;
+        }
+
+        footer .credits {
+            margin-top: 12px;
+            font-size: 11px;
+            color: #8fa6c9;
+        }
+
+        @media (max-width: 800px) {
+
+            nav {
+                display: none;
+            }
+
+            .item-card {
+                grid-template-columns: 1fr;
+            }
+
+            .image-section {
+                min-height: 300px;
+            }
+
+            .image-section img {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .details {
+                padding: 24px;
+            }
+
+            .details h2 {
+                font-size: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info.full {
+                grid-column: auto;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">
+        <h1>NMIET Smart Lost & Found</h1>
+        <p>Campus Management System</p>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/report-lost">Lost</a>
+        <a href="/report-found">Found</a>
+        <a href="/search">Search</a>
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+    <!-- FLASH / SUCCESS MESSAGE -->
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-message">
+                    ✅ {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <a href="/search" class="back">
+        ← Back to Search
+    </a>
+
+
+    <div class="item-card">
+
+        <!-- IMAGE -->
+
+        <div class="image-section">
+
+            {% if item["image_filename"] %}
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + item['image_filename']) }}"
+                    alt="{{ item['item_name'] }}"
+                >
+
+            {% else %}
+
+                <div class="no-image">
+                    No image uploaded
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="details">
+
+            {% if item["item_type"] == "Lost" %}
+
+                <span class="badge lost">
+                    LOST ITEM
+                </span>
+
+            {% else %}
+
+                <span class="badge found">
+                    FOUND ITEM
+                </span>
+
+            {% endif %}
+
+
+            <h2>
+                {{ item["item_name"] }}
+            </h2>
+
+
+            <div class="info-grid">
+
+                <div class="info">
+                    <span class="label">Category</span>
+                    <span class="value">
+                        {{ item["category"] }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Status</span>
+                    <span class="value">
+                        {{ item["status"] }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Date</span>
+                    <span class="value">
+                        {{ item["item_date"] or "Not provided" }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Time</span>
+                    <span class="value">
+                        {{ item["item_time"] or "Not provided" }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Campus Location</span>
+                    <span class="value">
+                        {{ item["location"] or "Not provided" }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Specific Area</span>
+                    <span class="value">
+                        {{ item["specific_area"] or "Not provided" }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Color</span>
+                    <span class="value">
+                        {{ item["color"] or "Not provided" }}
+                    </span>
+                </div>
+
+
+                <div class="info">
+                    <span class="label">Brand</span>
+                    <span class="value">
+                        {{ item["brand"] or "Not provided" }}
+                    </span>
+                </div>
+
+
+                <div class="info full">
+                    <span class="label">Unique Identification Mark</span>
+                    <span class="value">
+                        {{ item["unique_mark"] or "Not provided" }}
+                    </span>
+                </div>
+
+            </div>
+
+
+            {% if item["description"] %}
+
+                <div class="description">
+
+                    <span class="label">
+                        Description
+                    </span>
+
+                    <p>
+                        {{ item["description"] }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="actions">
+
+                {% if item["item_type"] == "Found" %}
+
+                    <a
+                        href="{{ url_for('claim_item', item_id=item['id']) }}"
+                        class="btn primary"
+                    >
+                        This Is My Item
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="/search"
+                        class="btn primary"
+                    >
+                        Search Found Matches
+                    </a>
+
+                {% endif %}
+
+
+                <a
+                    href="/search"
+                    class="btn secondary"
+                >
+                    Back to Search
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <p>
+        NMIET Smart Lost & Found Management System
+    </p>
+
+    <div class="credits">
+        Presented by Rohit Ingale & Ajinkya Ambare
+    </div>
+
+</footer>
+
+</body>
+</html>

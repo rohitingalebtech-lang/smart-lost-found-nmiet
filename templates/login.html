@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | NMIET Lost & Found</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #063b73, #0b559c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .logo-section {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .logo-section h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .logo-section h1 span {
+            color: #ffd43b;
+        }
+
+        .logo-section p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+        }
+
+        .login-card h2 {
+            color: #063b73;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #667085;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #344054;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d0d5dd;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #0b559c;
+            box-shadow: 0 0 0 3px rgba(11, 85, 156, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            border: none;
+            background: #063b73;
+            color: white;
+            padding: 13px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .login-btn:hover {
+            background: #0b559c;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            background: #fff8d6;
+            border-left: 4px solid #ffd43b;
+            padding: 12px;
+            border-radius: 5px;
+            color: #665500;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #063b73;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            font-size: 11px;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 500px) {
+            .login-card {
+                padding: 25px 20px;
+            }
+
+            .logo-section h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo-section">
+        <h1>NMIET <span>Lost & Found</span></h1>
+        <p>Smart Lost & Found Management System</p>
+    </div>
+
+    <div class="login-card">
+
+        <h2>Student Login</h2>
+
+        <p class="subtitle">
+            Enter your college details to continue
+        </p>
+
+        <form method="POST" action="/login">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="roll_no">Roll Number</label>
+                <input
+                    type="text"
+                    id="roll_no"
+                    name="roll_no"
+                    placeholder="Enter your roll number"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="division">Division</label>
+                <select id="division" name="division" required>
+                    <option value="">Select Division</option>
+                    <option value="A">Division A</option>
+                    <option value="B">Division B</option>
+                    <option value="C">Division C</option>
+                    <option value="D">Division D</option>
+                    <option value="E">Division E</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department</label>
+                <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="AI & Data Science">
+                        Artificial Intelligence & Data Science
+                    </option>
+                    <option value="Computer Engineering">
+                        Computer Engineering
+                    </option>
+                    <option value="Information Technology">
+                        Information Technology
+                    </option>
+                    <option value="Mechanical Engineering">
+                        Mechanical Engineering
+                    </option>
+                    <option value="Civil Engineering">
+                        Civil Engineering
+                    </option>
+                    <option value="Electronics & Telecommunication">
+                        Electronics & Telecommunication
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">College Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter college email"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login / Continue
+            </button>
+
+        </form>
+
+        <div class="info-box">
+            <strong>Note:</strong>
+            Your student details are used to identify the person
+            reporting or claiming an item.
+        </div>
+
+        <a href="/" class="back-link">
+            ← Back to Home
+        </a>
+
+    </div>
+
+    <div class="footer">
+        Presented by Rohit Ingale & Ajinkya Ambare
+    </div>
+
+</div>
+
+</body>
+</html>

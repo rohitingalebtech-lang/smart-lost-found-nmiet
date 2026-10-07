@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications | NMIET Lost & Found</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+.header{
+    background:#073b7a;
+    color:white;
+    padding:25px;
+    text-align:center;
+}
+
+.container{
+    max-width:850px;
+    margin:35px auto;
+    padding:0 20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    margin-bottom:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,.07);
+    border-left:5px solid #0b63ce;
+}
+
+.card.approved{
+    border-left-color:#159447;
+}
+
+.card.rejected{
+    border-left-color:#d93025;
+}
+
+.title{
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.message{
+    color:#4b5563;
+    line-height:1.6;
+}
+
+.date{
+    margin-top:10px;
+    font-size:12px;
+    color:#8a94a6;
+}
+
+.empty{
+    background:white;
+    padding:45px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.button{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 20px;
+    background:#073b7a;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.footer{
+    text-align:center;
+    color:#667085;
+    padding:30px;
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🔔 Notifications</h1>
+    <p>NMIET Lost & Found</p>
+</div>
+
+<div class="container">
+
+{% if notifications %}
+
+    {% for notification in notifications %}
+
+        <div class="card
+        {% if 'Approved' in notification.title %}
+            approved
+        {% elif 'Rejected' in notification.title %}
+            rejected
+        {% endif %}
+        ">
+
+            <div class="title">
+                {{ notification.title }}
+            </div>
+
+            <div class="message">
+                {{ notification.message }}
+            </div>
+
+            <div class="date">
+                {{ notification.created_at }}
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="empty">
+        <h2>No notifications yet</h2>
+        <p>Your claim approval or rejection messages will appear here.</p>
+
+        <a class="button" href="{{ url_for('home') }}">
+            Back to Home
+        </a>
+    </div>
+
+{% endif %}
+
+</div>
+
+<div class="footer">
+    Presented by Rohit Ingale & Ajinkya Ambare
+</div>
+
+</body>
+</html>
