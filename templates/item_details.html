@@ -473,13 +473,20 @@
                         This Is My Item
                     </a>
 
+                    <a
+                        href="{{ url_for('matches_page', item_id=item['id']) }}"
+                        class="btn primary"
+                    >
+                        ?? Find DSA Matches
+                    </a>
+
                 {% else %}
 
                     <a
-                        href="/search"
+                        href="{{ url_for('matches_page', item_id=item['id']) }}"
                         class="btn primary"
                     >
-                        Search Found Matches
+                        ?? Find DSA Matches
                     </a>
 
                 {% endif %}
